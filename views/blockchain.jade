@@ -1,0 +1,77 @@
+extends layout
+
+block content
+  .container-fluid
+    if messages.error
+      .alert.alert-danger(role='alert')
+        for error in messages.error
+          div= error.msg
+    if messages.success
+      .alert.alert-success(role='alert')
+        for success in messages.success
+          div= success.msg
+    if messages.info
+      .alert.alert-info(role='alert')
+        for info in messages.info
+          div= info.msg
+
+    .row
+      .col-sm-2
+      .col-sm-8
+        .panel
+          .panel-body
+            h1 Blockchain
+            p The blockchain is the record of <i>every</i> transaction that's ever been made using this coin.
+
+    if unverified_transactions
+      .row
+        .col-sm-2
+        .col-sm-8
+          .panel
+            .panel-body
+              h3 Unverified transactions
+              table(width='100%')
+                tr
+                  th Timestamp
+                  th From
+                  th To
+                  th Amount
+                  th Signature
+                  th Block id
+                for transaction in unverified_transactions
+                  tr
+                    td #{transaction.timestamp}
+                    td 
+                      a(href='/account/#{transaction.from}') #{transaction.from}
+                    td 
+                      a(href='/account/#{transaction.to}') #{transaction.to}
+                    td #{transaction.amount.toFixed(3)} GAL
+                    td 
+                      a(href='https://www.youtube.com/watch?v=dQw4w9WgXcQ') #{transaction.signature.substr(0,5)} . . . #{transaction.signature.substr(-6)}
+                    td #{transaction.block_id}
+
+    for block in blockchain
+      .row
+        .col-sm-2
+        .col-sm-8
+          .panel
+            .panel-body
+              h3 Block #{block.id}
+              p &#x023f0; Mined: <i>#{block.timestamp}</i>
+              h4 Transactions in this block
+              table(width='100%')
+                tr
+                  th Timestamp
+                  th From
+                  th To
+                  th Amount
+                  th Signature
+                for transaction in block.transactions
+                  tr
+                    td #{transaction.timestamp}
+                    td #{transaction.from}
+                    td #{transaction.to}
+                    td #{transaction.amount} GAL
+                    td #{transaction.signature.substr(0,5)} . . . #{transaction.signature.substr(-5)}
+
+

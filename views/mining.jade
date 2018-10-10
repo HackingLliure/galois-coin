@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  .container-fluid
+    if messages.error
+      .alert.alert-danger(role='alert')
+        for error in messages.error
+          div= error.msg
+    if messages.success
+      .alert.alert-success(role='alert')
+        for success in messages.success
+          div= success.msg
+    if messages.info
+      .alert.alert-info(role='alert')
+        for info in messages.info
+          div= info.msg
+
+    .row
+      .col-sm-2
+      .col-sm-8
+        .panel
+          .panel-body
+            h1 Mining
+    .row
+      .col-sm-2
+      .col-sm-8
+        .panel
+          .panel-body
+            h2 Pool
+            table(width='100%')
+                tr
+                  th Timestamp
+                  th Made by
+                  th Signature
+                  th Checked
+                  th Balance
+                  th Accepted
+                for signature in signatures
+                  tr
+                    td #{signature.time}
+                    td 
+                      a(href='/account/#{signature.made_by}') #{signature.made_by}
+                    td #{signature.signature.substr(0,10)} . . . #{signature.signature.substr(-10)}
+                    td 
+                      a(href='https://i.chzbgr.com/full/9104618752/h70889BA8/') #{signature.true_sign}
+                    td #{signature.true_balance}
+                    td #{signature.accepted}
+    .row
+      .col-sm-2
+      .col-sm-8
+        .panel
+          .panel-body.text-center
+            .col-sm-2
+            .col-sm-8
+              form.form-horizontal(action='/mining', method='POST')
+                .form-group
+                  button.btn.btn-success(type='mine') Mine

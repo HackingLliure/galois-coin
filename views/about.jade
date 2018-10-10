@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .container-fluid
+    if messages.success
+      .alert.alert-success(role='alert')
+        for success in messages.success
+          div= success.msg
+    if messages.error
+      .alert.alert-danger(role='alert')
+        for error in messages.error
+          div= error.msg
+    
+    .row
+      .col-sm-2
+      .col-sm-8
+        .panel
+          .panel-body
+            h1 About
+    .row
+      .col-sm-2
+      .col-sm-8
+        .panel
+          .panel-body
+            h3 Who are we?
+            p Hacking Liure.
+
+            h3 What is GaloisCoin (GAL)?
+            p A shitcoin.
+
+            h3 Hacking Lliure
+            img(alt='Test', src='#{qr}')
